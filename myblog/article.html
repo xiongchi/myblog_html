@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+<title>ÑîÇà¸öÈË²©¿Í</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="¸öÈË²©¿Í,ÑîÇà¸öÈË²©¿Í,¸öÈË²©¿ÍÄ£°å,ÑîÇà" />
+<meta name="description" content="ÑîÇà¸öÈË²©¿Í£¬ÊÇÒ»¸öÕ¾ÔÚwebÇ°¶ËÉè¼ÆÖ®Â·µÄÅ®³ÌÐòÔ±¸öÈËÍøÕ¾£¬Ìá¹©¸öÈË²©¿ÍÄ£°åÃâ·Ñ×ÊÔ´ÏÂÔØµÄ¸öÈËÔ­´´ÍøÕ¾¡£" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/base.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<link  rel="stylesheet" href="css/reply/main.css" />
+<link rel="stylesheet" type="text/css" href="css/reply/sinaFaceAndEffec.css" />
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+<script>
+window.onload = function ()
+{
+	var oH2 = document.getElementsByTagName("h2")[0];
+	var oUl = document.getElementsByTagName("ul")[0];
+	oH2.onclick = function ()
+	{
+		var style = oUl.style;
+		style.display = style.display == "block" ? "none" : "block";
+		oH2.className = style.display == "block" ? "open" : ""
+	}
+}
+</script>
+<header>
+  <div id="mnav">
+    <h2><span class="navicon"></span></h2>
+    <ul>
+      <li><a href="/">ÍøÕ¾Ê×Ò³</a></li>
+      <li><a href="/about.html">¹ØÓÚÎÒ</a></li>
+      <li><a href="/download/">Ä£°å·ÖÏí</a></li>
+      <li><a href="/jstt/">Ñ§ÎÞÖ¹¾³</a></li>
+      <li><a href="/news/">ÂýÉú»î</a></li>
+      <li><a href="/e/tool/gbook/?bid=3">ÁôÑÔ</a></li>
+    </ul>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/">ÍøÕ¾Ê×Ò³</a></li>
+      <li><a href="/about.html">¹ØÓÚÎÒ</a></li>
+      <li><a href="/download/">Ä£°å·ÖÏí</a></li>
+      <li><a href="/jstt/">Ñ§ÎÞÖ¹¾³</a></li>
+      <li><a href="/news/">ÂýÉú»î</a></li>
+      <li><a href="/e/tool/gbook/?bid=3">ÁôÑÔ</a></li>
+    </ul>
+  </nav>
+</header>
+<article>
+  <div class="sleftbox">
+    <div class="tuijian">
+      <h2 class="hometitle"></h2>
+      <p>内容</p>
+    </div>
+    <div id="reply" style="width: 100%; height: 300px;">
+      <div id="content" style="width: 99%; height: auto;">
+  <div class="wrap">
+    <div class="comment">
+      <div class="head-face">
+        <img src="images/1.jpg" / >
+        <p>我是鸟</p>
+      </div>
+      <div class="content">
+        <div class="cont-box">
+          <textarea class="text" placeholder="请输入..."></textarea>
+        </div>
+        <div class="tools-box">
+          <div class="operator-box-btn"><span class="face-icon"  >☺</span><span class="img-icon">▧</span></div>
+          <div class="submit-btn"><input type="button" onClick="out()"value="提交评论" /></div>
+        </div>
+      </div>
+    </div>
+    <div id="info-show">
+      <ul></ul>
+    </div>
+  </div>
+</div>
+    </div>
+    
+    </div>
+  </div>
+  <div class="srightbox">
+    <div class="aboutme">
+      <h2 class="ab_title">¹ØÓÚÎÒ</h2>
+      <div class="avatar"><img src="picture/b04.jpg" /></div>
+      <div class="ab_con">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</article>
+</body>
+<script type="text/javascript" src="js/reply/main.js"></script>
+<script type="text/javascript" src="js/reply/sinaFaceAndEffec.js"></script>
+<script>
+
+  $(document).ready(function(){
+    // $("#reply").load("reply.html");
+
+    var articleId = getUrlParam('articleId');
+
+     $.ajax({
+            type : "GET",
+            url : "http://localhost:8081/article/find/" + articleId,
+            dataType : "jsonp",
+            jsonp: "callback",
+            success: function(json) {
+                console.log(json.obj);
+                var data = json.obj;
+                $(".tuijian .hometitle").text(data.articleTitle);
+                $(".tuijian p").text(data.articleContent);
+            }
+        });
+     
+  });
+
+function getUrlParam(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r!=null) return unescape(r[2]); return null;
+}
+</script>
+<script type="text/javascript">
+  var articleId = getUrlParam('articleId');
+  // 绑定表情
+  $('.face-icon').SinaEmotion($('.text'));
+  // 测试本地解析
+  function out() {
+     var inputText = $('.text').val();
+     saveReply(inputText); 
+  }
+  function saveReply(inputText){
+     $.ajax({
+            type : "POST",
+            url : "http://localhost:8081/reply/save",
+            dataType : "json",
+            async:true,
+            data:{
+              "articleId": articleId,
+              "replyContent": inputText
+            },
+            success: function(data, textStatus) {
+                console.info(data);
+                var code = data.code;
+                if(code == 0){
+                   $('#info-show ul').append(reply(AnalyticEmotion(data.obj.replyContent), data.obj));
+                }
+
+            }
+        });
+  }
+  
+  var html;
+  function reply(content, obj){
+    var nowDate = new Date().toLocaleString();
+    html  = '<li>';
+    html += '<div class="head-face">';
+    html += '<img src="images/1.jpg" / >';
+    html += '</div>';
+    html += '<div class="reply-cont">';
+    html += '<p class="username">小小红色飞机</p>';
+    html += '<p class="comment-body">'+content+'</p>';
+    html += '<p class="comment-footer">'+ nowDate +'　<a id="hhh" href="javascript:void(0)" onclick="answer(this,'+obj.replyId+')">回复</a>　点赞'+
+    obj.replyZan+'  </p>';
+    html += '<div id="'+obj.replyId+'_ans">asdadad</div></div>';
+    html += '</li>';
+    return html;  
+  } 
+
+  function answer(oa, replyId){
+    var ali = $(oa).parent("p").parent("div .reply-cont");
+    if(ali.children().length == 3){
+    html = '<div class="content">';
+    html += '<div class="operator-box-btn">';
+    html += '<div class="cont-box">';
+    html += '<textarea id="'+replyId+'_text" class="text"></textarea>';
+    html += '</div>';
+    html += '<div class="tools-box"><div class="operator-box-btn">';
+    html += '<span class="face-icon">☺</span></div>';
+    html += '<div class="submit-btn"><input type="button" onClick="anClick(this,'+replyId+')"value="提交评论" /></div>';
+    html += '</div></div>'
+    ali.append(html);
+  }else{
+    ali.children()[3].remove();
+  }
+    // $(oa).parent("p").parent("div .reply-cont").parent("li").id;
+    // alert(this.parent());
+  }
+
+  function anClick(oa, replyId){
+    var ans = $("#" + replyId + "_text");
+    alert(ans.val());
+    $("#" + replyId + "_ans").append('<p>' + ans.val() + '</p>');
+  }
+</script>
+
+</html>

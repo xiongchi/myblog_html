@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<link href="css/base.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+<header>
+
+</header>
+<article>
+  
+	<input type="file" name="file" id="file_upload" multiple="multiple" />  
+    <input type="button" value="上传图片" onclick="ajaxUpload()" />
+
+</article>
+</body>
+<script>
+
+      function ajaxUpload() {  
+              var fd = new FormData();
+			  console.info($("#file_upload")[0].files);
+			  for(var i = 0; i < $("#file_upload")[0].files.length; i++){
+			      fd.append("files", $("#file_upload")[0].files[i]);
+			  }
+              $.ajax({	
+                  type : "post",  
+                  url : "http://localhost:8081/photo/multiUpFiles",  
+                  async : false,  
+                  processData : false, // 不处理数据  
+                  contentType : false, // 不设置内容类型  
+                  data : fd, 
+                  dataType : 'text', //返回类型json、text  
+                  success : function(data) {  
+                      alert(data);  
+                  }  
+              });  
+          }  
+
+     
+</script>
+
+</html>
